@@ -1,5 +1,6 @@
 // https://www.cleverence.ru/support/77127/
 // https://www.cleverence.ru/support/139408/
+// https://github.com/bwipp/postscriptbarcode/wiki
 import bwipjs from "bwip-js/node";
 import { error } from "console";
 import { SaveAsPDF } from "./SaveAsPDF";
