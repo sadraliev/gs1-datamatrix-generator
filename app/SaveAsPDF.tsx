@@ -1,8 +1,15 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+
 export const SaveAsPDF = () => {
-  const saveAsPDF = () => {
+  const saveAsPDFHandler = () => {
     window.print();
   };
-  return <button onClick={saveAsPDF}>Сохранить как PDF</button>;
+
+  return (
+    <Button type="button" className="w-full" onClick={saveAsPDFHandler}>
+      Сохранить как PDF
+    </Button>
+  );
 };
