@@ -1,13 +1,13 @@
 "use client";
 import bwipjs from "bwip-js/browser";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { refineCis } from "@/app/api/route";
 import Image from "next/image";
 import { SaveAsPDF } from "@/app/SaveAsPDF";
+import { refineCis } from "@/lib/utils";
 
 export function BusinessCardDashboardComponent() {
   const [articul, setArticul] = useState("GTS248-1");
@@ -16,6 +16,11 @@ export function BusinessCardDashboardComponent() {
   const [cis, setCis] = useState(
     "0104680678190348215PHppAexNfHTE\x1D9100C2\x1D929a8ZnTb3lzkvogz5YRQ7vcVBUbYbtlb9KX+8mFnv4YzKO8dNQnrw0b0ZJU+uDPaKZyKBJQQgOW1NKQXU3ef7kQ=="
   );
+  const [uri, setUri] = useState("");
+
+  useEffect(() => {
+    setUri(generateDatamatrixImageFromCis(cis));
+  }, [cis]);
 
   function generateDatamatrixImageFromCis(cis: string) {
     const canvas = document.createElement("canvas");
@@ -39,7 +44,7 @@ export function BusinessCardDashboardComponent() {
           <div className="flex items-center justify-center">
             <Card className="w-full max-w-[580px] h-72 bg-gradient-to-r from-blue-400 to-blue-500 shadow-xl">
               <CardContent className="p-6 text-white flex items-stretch h-full">
-                <div className=" flex flex-col justify-between max-w-[200px]">
+                <div className=" flex  flex-col justify-between max-w-[200px]">
                   <div>
                     <h2 className="text-2xl font-bold">{articul}</h2>
                     <p className="text-sm mb-2">{size}</p>
@@ -54,12 +59,7 @@ export function BusinessCardDashboardComponent() {
                   className="flex flex-grow items-center justify-center w-48 h-full bg-white p-1 rounded-lg ml-4"
                   aria-label="QR Code Placeholder"
                 >
-                  <Image
-                    src={generateDatamatrixImageFromCis(cis)}
-                    alt="datamatrix"
-                    width={200}
-                    height={200}
-                  />
+                  <Image src={uri} alt="datamatrix" width={200} height={200} />
                 </div>
               </CardContent>
             </Card>

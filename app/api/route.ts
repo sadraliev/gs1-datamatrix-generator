@@ -1,6 +1,7 @@
 // https://www.cleverence.ru/support/77127/
 // https://www.cleverence.ru/support/139408/
 // https://github.com/bwipp/postscriptbarcode/wiki
+import { refineCis } from "@/lib/utils";
 import bwipjs from "bwip-js/node";
 
 export type PostGenerateDatamatrixByCisRequest = {
@@ -17,17 +18,6 @@ export async function POST(req: Request) {
   const imageUri = await generateDatamatrixImageFromCis(cis);
 
   return Response.json([{ uri: imageUri }]);
-}
-
-export function refineCis(code: string): string {
-  const GS = String.fromCharCode(29);
-  const FunctionCode1 = "^FNC1";
-
-  const refined = code.replace(/\\x1D/g, GS);
-
-  return code.startsWith(FunctionCode1)
-    ? refined
-    : `${FunctionCode1}${refined}`;
 }
 
 async function generateDatamatrixImageFromCis(cis: string): Promise<string> {
